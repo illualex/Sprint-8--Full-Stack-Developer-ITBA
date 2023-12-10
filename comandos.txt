@@ -1,0 +1,46 @@
+Crear entorno virtual:
+     virtualenv venv
+
+Activar entorno virtual: (Windows)
+    venv\Scripts\activate
+
+Crear proyecto django:
+    django-admin startproject bcib_backend
+
+Crear una aplicacion django:
+    python manage.py startapp [nombre_carpeta]
+
+Revisar cambios:
+    python manage.py makemigrations
+
+Realizar migracion:
+    python manage.py migrate
+
+Saber las librerías instaladas en tu entorno virtual:
+    pip freeze
+
+Crear requerimientos en txt: (NO USAR, a no ser que se instale una nueva dependencia)
+    pip freeze > requirements.txt
+
+Descargar requerimientos para el entorno virtual (repo clonado):
+    pip install -r requirements.txt
+
+Usar comando inspectdb:
+    python manage.py inspectdb > models.py
+
+Crear un superusuario: (proporcionar un nombre de usuario, correo electrónico y contraseña)
+    python manage.py createsuperuser
+
+    username: admin
+    email:
+    password: adm123456
+
+
+cifrar contraseñas:
+    python manage.py shell
+
+    from django.contrib.auth.hashers import make_password
+    password = "123456"
+    hashed_password = make_password(password)
+
+    print(hashed_password)
