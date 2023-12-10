@@ -1,7 +1,12 @@
 from rest_framework import serializers
-from .models import Cliente
+from .models import Cliente, Empleado
 
 class ClienteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cliente
-        fields = ['customer_id', 'customer_name', 'customer_surname', 'customer_dni']
+        fields = '__all__'
+
+class EmpleadoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Empleado
+        fields = '__all__'

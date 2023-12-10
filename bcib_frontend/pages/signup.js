@@ -1,4 +1,4 @@
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { Input } from "../components/input";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -6,28 +6,58 @@ import React, { useState } from "react";
 import Head from "next/head";
 import { useAuth } from '../components/authContext';
 import axios from 'axios';
+import NotificationPopup from '../components/notificationPopup';
 
 export default function Login() {
   const methods = useForm();
+  const { register, handleSubmit, control, setValue } = methods;
   const router = useRouter();
-  const { setIsLoggedIn, setClientName } = useAuth();
-
-  const onSubmit = methods.handleSubmit(async (data) => {
-    console.log("data", data);
+  const { setIsLoggedIn, setClient, setAuthToken, setIsEmployee } = useAuth();
+  const [error, setError] = useState(null);
+  const onSubmit = async (data) => {
     try {
-      // Realizar la solicitud HTTP a tu backend Django utilizando Axios
       const response = await axios.post('http://localhost:8000/login/', {
         username: data.Usuario,
         password: data.Contraseña,
+        isEmployee: data.isEmployee || false,
       }, { withCredentials: true });
+      setAuthToken(response.data.token);
       setIsLoggedIn(true);
-      setClientName(response.data.cliente.customer_name);
-      await router.push(`/profile`);
+      if (data.isEmployee) {
+        setIsEmployee(true);
+        setClient(response.data.empleado);
+        await router.push(`/employee`);
+      } else {
+        setIsEmployee(false);
+        setClient(response.data.cliente);
+        await router.push(`/profile`);
+      }
+      setError(null);
     } catch (error) {
-      // Manejar errores, por ejemplo, mostrar un mensaje de error al usuario
       console.error('Error de inicio de sesión:', error);
+      if (error.response) {
+        if (error.response.status === 401) {
+          setError('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
+        } else if (error.response.status === 404) {
+          setError('Usuario no encontrado. Por favor, verifique sus credenciales.');
+        } else {
+          setError('Hubo un problema al procesar la solicitud. Por favor, inténtalo más tarde.');
+        }
+      } else if (error.request) {
+        setError('No se pudo conectar con el servidor. Por favor, verifica tu conexión a internet.');
+      } else {
+        setError('Hubo un problema al procesar la solicitud. Por favor, inténtalo más tarde.');
+      }
     }
+  };
+  const isEmployee = useWatch({
+    control,
+    name: 'isEmployee',
+    defaultValue: false,
   });
+  const handleNotificationClose = () => {
+    setError(null);
+  };
 
   return (
     <>
@@ -44,9 +74,8 @@ export default function Login() {
       </Head>
       <div className="grid place-items-center">
         <FormProvider {...methods}>
-        {console.log("Form renderizado")}
           <form
-            onSubmit={onSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             noValidate
             className="text-center m-4 p-4 sm:p-10 w-11/12 md:w-1/2 lg:w-1/3 xl:w-1/4 bg-gray-300 rounded-xl"
           >
@@ -55,16 +84,24 @@ export default function Login() {
                 label="Usuario"
                 type="text"
                 id="username"
-                name="username"
+                name="Usuario"
                 placeholder="Ingrese el usuario"
               />
               <Input
                 label="Contraseña"
                 type="password"
                 id="password"
-                name="password"
+                name="Contraseña"
                 placeholder="Ingrese la contraseña"
               />
+            </div>
+            <div className="flex items-center mt-4">
+              <input
+                type="checkbox"
+                id="isEmployee"
+                {...register('isEmployee')}
+              />
+              <label htmlFor="isEmployee" className="ml-2">¿Eres un empleado?</label>
             </div>
             <div className="grid place-content-center mt-4">
               <button
@@ -76,6 +113,9 @@ export default function Login() {
             </div>
           </form>
         </FormProvider>
+        {error && (
+          <NotificationPopup message={error} onClose={handleNotificationClose} />
+        )}
       </div>
     </>
   );

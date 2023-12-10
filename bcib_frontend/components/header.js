@@ -9,16 +9,18 @@ import { useAuth } from '../components/authContext';
 
 export default function Header() {
     const router = useRouter();
-    const { isLoggedIn, setIsLoggedIn } = useAuth();
+    const { isLoggedIn, setIsLoggedIn, setAuthToken, isEmployee, setIsEmployee } = useAuth();
     const handleLogout = async () => {
         setIsLoggedIn(false);
+        setIsEmployee(false);
+        setAuthToken('');
         await router.push('/');
     };
 
     return (
         <div className="grid grid-cols-3 shadow-lg shadow-gray-500/5">
             <div className="m-1">
-                {isLoggedIn ? <NavbarLoggedIn /> : <NavbarLoggedOut />}
+                {isEmployee ? null : (isLoggedIn ? <NavbarLoggedIn /> : <NavbarLoggedOut />)}
             </div>
             <div className="flex m-1 justify-center">
                 <Link href="/">
@@ -27,24 +29,37 @@ export default function Header() {
             </div>
             <div className="m-1">
                 <div className="buttonMenu justify-end">
-                    {isLoggedIn ? (
-                        <>
-                            <button className="btnRegistrarse" onClick={handleLogout}>
-                                Cerrar Sesión
-                            </button>
-                        </>
+                    {isEmployee ? (
+                        <button className="btnRegistrarse" onClick={handleLogout}>
+                            Cerrar Sesión
+                        </button>
                     ) : (
                         <>
-                            <Link href="/signup">
-                                <button className="btnInicioSesion">
-                                    Iniciar Sesión
-                                </button>
-                            </Link>
-                            <Link href="/signup">
-                                <button className="btnRegistrarse">
-                                    Hacerte Cliente
-                                </button>
-                            </Link>
+                            {isLoggedIn ? (
+                                <>
+                                    <Link href="/account">
+                                        <button className="btnInicioSesion">
+                                            Mi Perfil
+                                        </button>
+                                    </Link>
+                                    <button className="btnRegistrarse" onClick={handleLogout}>
+                                        Cerrar Sesión
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    <Link href="/signup">
+                                        <button className="btnInicioSesion">
+                                            Iniciar Sesión
+                                        </button>
+                                    </Link>
+                                    <Link href="/signup">
+                                        <button className="btnRegistrarse">
+                                            Hacerte Cliente
+                                        </button>
+                                    </Link>
+                                </>
+                            )}
                         </>
                     )}
                 </div>

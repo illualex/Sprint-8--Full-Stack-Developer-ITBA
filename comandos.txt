@@ -34,3 +34,13 @@ Crear un superusuario: (proporcionar un nombre de usuario, correo electrónico y
     username: admin
     email:
     password: adm123456
+
+
+cifrar contraseñas:
+    python manage.py shell
+
+    from django.contrib.auth.hashers import make_password
+    password = "123456"
+    hashed_password = make_password(password)
+
+    print(hashed_password)

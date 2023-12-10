@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-42*k+lgwpm0ykg!ulq(d^&l2%#jrwsto9c6gp22$)@wc#98#55
 DEBUG = True
 
 #ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['localhost', '127.0.0.1'] #, '127.0.0.1'
+ALLOWED_HOSTS = ['localhost', '127.0.0.1'] #, 'localhost', '127.0.0.1'
 
 # Agrega el dominio de tu aplicación Next.js
 CORS_ALLOWED_ORIGINS = [
@@ -43,9 +43,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
+    'djoser',
+    'rest_framework_simplejwt',
+    'django_extensions',
     'login',
-    'cuentas',
+    'tarjetas',
+    'sucursales',
+    'clientes',
+    'empleado',
 ]
 
 MIDDLEWARE = [
@@ -84,6 +91,7 @@ SESSION_COOKIE_SECURE = False
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ],
@@ -136,7 +144,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
@@ -146,3 +153,18 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTHENTICATION_BACKENDS = ['login.authentication.CustomAuthBackend']
+
+PASSWORD_HASHERS = [
+    "django.contrib.auth.hashers.PBKDF2PasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
+    "django.contrib.auth.hashers.Argon2PasswordHasher",
+    "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
+    "django.contrib.auth.hashers.BCryptPasswordHasher",
+    "django.contrib.auth.hashers.ScryptPasswordHasher",
+    "django.contrib.auth.hashers.MD5PasswordHasher",
+]
+
+# settings.py
+AUTH_USER_MODEL = 'login.AuthUser'
