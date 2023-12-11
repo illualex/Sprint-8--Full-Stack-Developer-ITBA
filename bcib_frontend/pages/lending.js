@@ -13,19 +13,20 @@ const LendingScreen = () => {
   };
   const handleClosePopup = () => {
     setShowPopup(false);
+    fetchData(); 
+  };
+
+  const fetchData = async () => {
+    try {
+      const headers = { Authorization: `Token ${authToken}` };
+      const response = await axios.get(`http://localhost:8000/clientes/prestamos/${client.customer_id}`, { headers });
+      setPrestamos(response.data);
+    } catch (error) {
+      console.error('Error al obtener los préstamos:', error.message);
+    }
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const headers = { Authorization: `Token ${authToken}` };
-        const response = await axios.get(`http://localhost:8000/clientes/prestamos/${client.customer_id}`, { headers });
-
-        setPrestamos(response.data);
-      } catch (error) {
-        console.error('Error al obtener los préstamos:', error.message);
-      }
-    };
     fetchData();
   }, []);
 
@@ -57,7 +58,7 @@ const LendingScreen = () => {
               </button>
             </div>
             {showPopup && (
-              <LendingPopup onClose={handleClosePopup} />
+              <LendingPopup onClose={handleClosePopup} client={client}/>
             )}
           </div>
           <div className='my-5'>

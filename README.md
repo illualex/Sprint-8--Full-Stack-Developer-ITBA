@@ -15,6 +15,6 @@ En Empleado para la busque de cliente por DNI usar:
 _ 74701370 (Moses)
 
 En Empleado / Prestamo hay datos para la sucursal:
-_ Poltava
-_ San Pedro
-_ Darwin
+_ San Pedro (Moses)
+_ Poltava (Otros)
+_ Darwin (Otros)

@@ -57,13 +57,23 @@ class AuthUser(AbstractBaseUser, PermissionsMixin):
         managed = False
         db_table = 'auth_user'
 
+class Sucursal(models.Model):
+    branch_id = models.AutoField(primary_key=True)
+    branch_number = models.BinaryField()
+    branch_name = models.TextField()
+    branch_address_id = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'sucursal'
+        
 class Cliente(models.Model):
     customer_id = models.AutoField(primary_key=True)
     customer_name = models.TextField()
     customer_surname = models.TextField()
     customer_dni = models.TextField(db_column='customer_DNI')
     dob = models.TextField(blank=True, null=True)
-    branch_id = models.IntegerField()
+    branch = models.ForeignKey(Sucursal, models.DO_NOTHING, blank=True, null=True)
     tipo_cliente = models.ForeignKey(TipoCliente, models.DO_NOTHING, blank=True, null=True)
     user = models.ForeignKey(AuthUser, models.DO_NOTHING, blank=True, null=True)
 

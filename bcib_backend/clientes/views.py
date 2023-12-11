@@ -22,6 +22,7 @@ class ClienteView(APIView):
     @api_view(['POST'])
     def guardar_prestamo(request, *args, **kwargs):
         prestamo = PrestamoSerializer(data = request.data)
+        print("prestamo", prestamo)
         if prestamo.is_valid():
             prestamo.save()
             cliente = Cliente.objects.get(customer_id=request.data['customer_id'])

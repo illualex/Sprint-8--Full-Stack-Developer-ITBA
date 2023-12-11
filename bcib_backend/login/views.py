@@ -14,7 +14,6 @@ class LoginView(APIView):
         username = request.data.get('username')
         password = request.data.get('password')
         isEmployee= request.data.get('isEmployee')
-        print("es empleado", isEmployee)
         auth_user = authenticate(request, username=username, password=password)
 
         if auth_user is not None:

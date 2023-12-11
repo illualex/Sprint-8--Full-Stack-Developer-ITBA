@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Cliente, Cuenta, Direccion, AuthUser, Prestamo, Tarjeta, TipoTarjeta
+from .models import Cliente, Cuenta, Direccion, AuthUser, Prestamo, Tarjeta, TipoTarjeta, Sucursal
 
 class AuthUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,9 +11,15 @@ class DireccionSerializer(serializers.ModelSerializer):
         model = Direccion
         fields = '__all__'
 
+class SucursalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sucursal
+        fields = '__all__'
+
 class ClienteSerializer(serializers.ModelSerializer):
     direccion = DireccionSerializer(source='direccion_set', many=True)
     user = AuthUserSerializer()
+    branch = SucursalSerializer()
     class Meta:
         model = Cliente
         fields = '__all__'

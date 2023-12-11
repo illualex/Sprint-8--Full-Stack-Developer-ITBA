@@ -39,7 +39,9 @@ const ClientTab = () => {
   };
   const handleClosePopup = () => {
     setShowPopup(false);
+    fetchData()
   };
+
   const handleBuscarClick = async () => {
     try {
       await fetchData();
@@ -244,7 +246,7 @@ const ClientTab = () => {
             </div>
           )}
           {showPopup && (
-            <LendingPopup onClose={handleClosePopup} client={clientData} onLoanRequest={handleSolicitarPrestamo} />
+            <LendingPopup onClose={handleClosePopup} client={clientData} />
           )}
         </div>
       </div>
