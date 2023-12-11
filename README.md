@@ -10,3 +10,8 @@ Contraseña: 123456
 --- Empleado ---
 Usuario: conan
 Contraseña: 123456
+
+En Empleado / Prestamo hay datos para la sucursal:
+_ Poltava
+_ San Pedro
+_ Darwin
