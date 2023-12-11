@@ -4,7 +4,7 @@ import { useAuth } from '../components/authContext';
 import LendingPopup from '../components/lendingPopup';
 
 const LendingScreen = () => {
-  const {client, authToken } = useAuth();
+  const { client, authToken } = useAuth();
   const [showPopup, setShowPopup] = useState(false);
   const [prestamos, setPrestamos] = useState([]);
   const handleShowPopup = () => {
@@ -32,9 +32,13 @@ const LendingScreen = () => {
     <div className="grid place-items-center">
       <h1 className="mt-5 mb-6 text-2xl sm:text-3xl text-center">Préstamos</h1>
       <div className="w-full sm:w-3/4">
-        <div className="bg-gray-300 rounded-xl mx-5 p-4 space-y-6 relative">
+        <div className="bg-gray-300 rounded-xl p-4 space-y-6 relative">
           <div className="grid place-content-center m-5">
-            <p>Usted cuenta con un préstamo preaprobado, haga clic para solicitarlo:</p>
+            <p className="text-center mb-4">
+              Usted cuenta con un préstamo preaprobado.
+              <br />
+              Haga clic para solicitarlo:
+            </p>
             <button className="btnRegistrarse w-full" onClick={handleShowPopup}>
               Solicitar Préstamo
             </button>
@@ -42,31 +46,33 @@ const LendingScreen = () => {
           {showPopup && (
             <LendingPopup onClose={handleClosePopup} />
           )}
-          <div>
-            {prestamos.length > 0 && (
+        </div>
+        <div className='my-5'>
+          {prestamos.length > 0 && (
+            <div className="overflow-x-auto mb-10 text-left">
               <div>
-                <h2>Préstamos del Cliente</h2>
-                <table className="table-auto">
+                <h2 className="text-2xl font-bold mb-4 text-center">Préstamos del Cliente</h2>
+                <table className="min-w-full border-collapse border">
                   <thead>
                     <tr>
-                      <th>Tipo</th>
-                      <th>Fecha</th>
-                      <th>Total</th>
+                      <th className="border px-4 py-2">Tipo</th>
+                      <th className="border px-4 py-2">Fecha</th>
+                      <th className="border px-4 py-2">Total</th>
                     </tr>
                   </thead>
                   <tbody>
                     {prestamos.map((prestamo) => (
                       <tr key={prestamo.loan_id}>
-                        <td>{prestamo.loan_type}</td>
-                        <td>{prestamo.loan_date}</td>
-                        <td>{prestamo.loan_total}</td>
+                        <td className="border px-4 py-2">{prestamo.loan_type}</td>
+                        <td className="border px-4 py-2">{prestamo.loan_date}</td>
+                        <td className="border px-4 py-2">{prestamo.loan_total}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

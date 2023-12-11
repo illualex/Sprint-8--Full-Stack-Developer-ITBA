@@ -91,50 +91,78 @@ const ClientTab = () => {
   return (
     <div>
       <form className="mb-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div>
-            <label className="block mb-2">Ingrese DNI del Cliente: </label>
-            <input
-              type="text"
-              className="w-full p-2 border rounded"
-              value={dni}
-              onChange={(e) => setDNI(e.target.value)}
-            />
-          </div>
-          <button
-            type="button"
-            onClick={handleBuscarClick}
-            className="bg-blue-500 text-white px-4 py-2 mt-4"
-          >
-            Buscar
-          </button>
-          <button
-            type="button"
-            onClick={handleLimpiarClick}
-            className="bg-gray-500 text-white px-4 py-2 mt-4"
-          >
-            Limpiar
-          </button>
-        </div>
+        <table className='flex items-center justify-center border-collapse'>
+          <tbody>
+            <tr>
+              <td>
+                <label className="block mb-2 text-lg font-bold">Ingrese DNI del Cliente: </label>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  className="p-2 border rounded"
+                  value={dni}
+                  onChange={(e) => setDNI(e.target.value)}
+                />
+              </td>
+              <td>
+                <button
+                  type="button"
+                  onClick={handleBuscarClick}
+                  className="btnRegistrarse"
+                >
+                  Buscar
+                </button>
+              </td>
+              <td>
+                <button
+                  type="button"
+                  onClick={handleLimpiarClick}
+                  className="btnInicioSesion"
+                >
+                  Limpiar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </form>
 
       {clientData && (
-        <div>
-          <h2 className="mb-2">Información del Cliente</h2>
+        <div className="flex flex-col items-center mx-auto text-lg">
+          <h1 className="underline">Información del Cliente</h1>
           <div className="flex items-center mb-4">
-            <p className="mr-2">Nombre:</p>
+            <p className="mr-2 font-bold">Nombre:</p>
             <p className="mr-2">{clientData.customer_name}</p>
-            <p>Apellido: {clientData.customer_surname}</p>
+            <p className='mr-2 font-bold'>Apellido: </p>
+            <p className='mr-2'>{clientData.customer_surname}</p>
           </div>
-          <div>
-            <h3 className="mb-2">Domicilio</h3>
-            <p>Calle: {clientData.direccion[0].calle}</p>
-            <p>Número: {clientData.direccion[0].numero}</p>
-            <p>Localidad: {clientData.direccion[0].localidad}</p>
-            <p>Provincia: {clientData.direccion[0].provincia}</p>
-            <p>Código Postal: {clientData.direccion[0].codigo_postal}</p>
-            <button className='btnRegistrarse' onClick={() => setIsPopupOpen(true)}>Modificar Dirección</button>
-          </div>
+          <h1 className="text-center underline">Domicilio</h1>
+          <table className='my-4'>
+            <tbody>
+              <tr>
+                <td className="font-bold">Calle:</td>
+                <td>{clientData.direccion[0].calle}</td>
+              </tr>
+              <tr>
+                <td className="font-bold">Número:</td>
+                <td>{clientData.direccion[0].numero}</td>
+              </tr>
+              <tr>
+                <td className="font-bold">Localidad:</td>
+                <td>{clientData.direccion[0].localidad}</td>
+              </tr>
+              <tr>
+                <td className="font-bold">Provincia:</td>
+                <td>{clientData.direccion[0].provincia}</td>
+              </tr>
+              <tr>
+                <td className="font-bold">Código Postal:</td>
+                <td>{clientData.direccion[0].codigo_postal}</td>
+              </tr>
+            </tbody>
+          </table>
+          <button className='btnRegistrarse' onClick={() => setIsPopupOpen(true)}>Modificar Dirección</button>
           <AddressPopup
             isOpen={isPopupOpen}
             onClose={() => setIsPopupOpen(false)}
@@ -144,12 +172,13 @@ const ClientTab = () => {
           />
         </div>
       )}
+      <hr className='border border-gray my-5'></hr>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
           {tarjetas.length > 0 && (
             <div>
-              <h2>Tarjetas del Cliente</h2>
-              <table className="table-auto">
+              <h1 className='text-center underline my-4'>Tarjetas del Cliente</h1>
+              <table className="min-w-full border-collapse border table-auto">
                 <thead>
                   <tr>
                     <th>Tipo</th>
@@ -171,8 +200,8 @@ const ClientTab = () => {
         <div>
           {prestamos.length > 0 && (
             <div>
-              <h2>Préstamos del Cliente</h2>
-              <table className="table-auto">
+              <h1 className='text-center underline my-4'>Préstamos del Cliente</h1>
+              <table className="min-w-full border-collapse border table-auto my-4">
                 <thead>
                   <tr>
                     <th>Tipo</th>
@@ -187,7 +216,7 @@ const ClientTab = () => {
                       <td>{prestamo.loan_type}</td>
                       <td>{prestamo.loan_date}</td>
                       <td>{prestamo.loan_total}</td>
-                      <td>
+                      <td className='flex justify-center'>
                         <button
                           type="button"
                           onClick={() => handleAnularPrestamo(prestamo.loan_id)}
@@ -204,13 +233,15 @@ const ClientTab = () => {
           )}
           {error && <p className="text-red-500">{error}</p>}
           {clientData && (
-            <button
-              type="button"
-              onClick={handleShowPopup}
-              className="bg-green-500 text-white px-4 py-2 mt-4"
-            >
-              Solicitar Préstamo
-            </button>
+            <div className='flex justify-center'>
+              <button
+                type="button"
+                onClick={handleShowPopup}
+                className="btnRegistrarse"
+              >
+                Solicitar Préstamo
+              </button>
+            </div>
           )}
           {showPopup && (
             <LendingPopup onClose={handleClosePopup} client={clientData} onLoanRequest={handleSolicitarPrestamo} />

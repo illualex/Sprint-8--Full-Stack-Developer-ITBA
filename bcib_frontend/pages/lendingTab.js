@@ -36,9 +36,9 @@ const LendingTab = () => {
 
     return (
         <div>
-            <h2>Obtener monto de préstamos de una sucursal</h2>
+            <h1 className='text-center text-lg'>Obtener monto de préstamos de una sucursal</h1>
             <div>
-                <table>
+                <table className='flex items-center justify-center border-collapse'>
                     <tr>
                         <td>
                             <label className="block mb-2">Nombre de la sucursal</label>
@@ -58,13 +58,13 @@ const LendingTab = () => {
                             </select>
                         </td>
                         <td>
-                            <button type="submit" className="bg-blue-500 text-white px-4 py-2" onClick={handleBuscarClick}>Buscar</button>
+                            <button type="submit" className="btnRegistrarse" onClick={handleBuscarClick}>Buscar</button>
                         </td>
                     </tr>
                 </table>
                 <div className="border p-4 mt-4">
-                    <h3>Préstamos de la sucursal seleccionada:</h3>
-                    <table className="table-auto">
+                    <h1 className='text-center text-lg my-2'>Préstamos de la sucursal seleccionada:</h1>
+                    <table className="min-w-full border-collapse border table-auto">
                         <thead>
                             <tr>
                                 <th className="px-4 py-2">Tipo de Préstamo</th>
