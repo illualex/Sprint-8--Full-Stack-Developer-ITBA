@@ -3,8 +3,8 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/signup": "pages/signup.js",
-  "/account": "pages/account.js",
-  "/profile": "pages/profile.js",
   "/": "pages/index.js",
-  "/employee": "pages/employee.js"
+  "/account": "pages/account.js",
+  "/employee": "pages/employee.js",
+  "/profile": "pages/profile.js"
 }
