@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from './authContext';
 import axios from 'axios';
 
-const LendingPopup = ({ onClose, client, onLoanRequest }) => {
-  const { authToken } = useAuth();
+const LendingPopup = ({ onClose, onLoanRequest }) => {
+  const { client, authToken } = useAuth();
   const [tipoPrestamo, setTipoPrestamo] = useState('');
   const [fechaInicio, setFechaInicio] = useState('');
   const [montoPreaprobado, setMontoPreaprobado] = useState('');
@@ -33,6 +33,7 @@ const LendingPopup = ({ onClose, client, onLoanRequest }) => {
       const headers = { Authorization: `Token ${authToken}` };
       await axios.post('http://localhost:8000/clientes/guardar-prestamo/', data, { headers });
       onLoanRequest(data);
+      window.location.reload();
     } catch (error) {
       console.error('Error al guardar el préstamo:', error);
     }

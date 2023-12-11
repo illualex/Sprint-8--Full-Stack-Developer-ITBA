@@ -11,6 +11,9 @@ Contraseña: 123456
 Usuario: conan
 Contraseña: 123456
 
+En Empleado para la busque de cliente por DNI usar:
+_ 74701370 (Moses)
+
 En Empleado / Prestamo hay datos para la sucursal:
 _ Poltava
 _ San Pedro
