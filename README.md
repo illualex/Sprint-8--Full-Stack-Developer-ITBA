@@ -1,7 +1,7 @@
 # Full Stack Developer ITBA (Instituto Tecnológico de Buenos Aires)
-- Sprint: 1
+- Sprint: 8
 - Proyecto: BCIB (Banco Capital ITBA)
-- Lenguajes: NextJS / Tailwind / DJANGO / HTML / CSS / SQL
+- Lenguajes: NextJS / Tailwind / DJANGO / JS / CSS / SQL
 - Base de datos
 
 Las vistas se encuentran en la Carpeta Frontend y la lógica en la Carpeta Backend.
