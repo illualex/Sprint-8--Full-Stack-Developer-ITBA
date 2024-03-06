@@ -1,5 +1,8 @@
-# BCIB-Sprint8-ITBA
- Sprint 8 - Django + Next.js - Tailwind
+# Full Stack Developer ITBA (Instituto Tecnológico de Buenos Aires)
+- Sprint: 1
+- Proyecto: BCIB (Banco Capital ITBA)
+- Lenguajes: NextJS / Tailwind / DJANGO / HTML / CSS / SQL
+- Base de datos
 
 Las vistas se encuentran en la Carpeta Frontend y la lógica en la Carpeta Backend.
 
